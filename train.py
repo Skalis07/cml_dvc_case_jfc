@@ -1,36 +1,29 @@
-from sklearn.neural_network import MLPClassifier
-from sklearn.metrics import recall_score, precision_score
-import json
-import os
 import numpy as np
-import pandas as pd
+from sklearn.linear_model import LogisticRegression
+import mlflow
+import mlflow.sklearn
+from mlflow.models import infer_signature
+import numpy as np
+from sklearn.linear_model import LogisticRegression
 
+# Entrenamiento del modelo
+X = np.array([-2, -1, 0, 1, 2, 1]).reshape(-1, 1)
+y = np.array([0, 0, 1, 1, 1, 0])
+lr = LogisticRegression()
+lr.fit(X, y)
 
-# Read in data
-X_train = np.genfromtxt("data/train_features.csv")
-y_train = np.genfromtxt("data/train_labels.csv")
-X_test = np.genfromtxt("data/test_features.csv")
-y_test = np.genfromtxt("data/test_labels.csv")
+# Evaluación del modelo
+score = lr.score(X, y)
+print(f"Score: {score}")
 
+# Predicciones con el modelo entrenado
+predictions = lr.predict(X)
+print(f"Predictions: {predictions}")
 
-# Fit a model
+# Hacer predicciones con nuevos datos
+new_data = np.array([3, 4, -3, 0]).reshape(-1, 1)
+new_predictions = lr.predict(new_data)
+print(f"New Predictions: {new_predictions}")
 
-clf = MLPClassifier(random_state=0, max_iter=30)
-clf.fit(X_train,y_train)
-
-# Get overall accuracy
-acc = clf.score(X_test, y_test)
-
-# Get precision and recall
-y_score = clf.predict(X_test)
-prec = precision_score(y_test, y_score)
-rec = recall_score(y_test,y_score)
-
-# Get the loss
-loss = clf.loss_curve_
-pd.DataFrame(loss, columns=["loss"]).to_csv("loss.csv", index=False)
-
-with open("metrics.json", 'w') as outfile:
-        json.dump({ "accuracy": acc, "precision":prec,"recall":rec}, outfile)
-
-
+# Guardar las nuevas predicciones en un archivo
+np.savetxt("new_predictions.csv", new_predictions, delimiter=",", fmt="%d")
