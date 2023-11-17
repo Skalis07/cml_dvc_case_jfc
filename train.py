@@ -1,8 +1,5 @@
 import numpy as np
 from sklearn.linear_model import LogisticRegression
-import mlflow
-import mlflow.sklearn
-from mlflow.models import infer_signature
 import numpy as np
 from sklearn.linear_model import LogisticRegression
 
