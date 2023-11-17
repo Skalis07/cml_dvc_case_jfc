@@ -1,0 +1,9 @@
+schema: '2.0'
+stages:
+  entrenar_modelo:
+    cmd: python train.py
+    deps:
+    - path: train.py
+      hash: md5
+      md5: 29300eaa2cb429ad4d286c8e9e2b6530
+      size: 929
