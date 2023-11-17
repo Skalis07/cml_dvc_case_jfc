@@ -1,0 +1,23 @@
+schema: '2.0'
+stages:
+  mystage:
+    cmd: python train.py
+    deps:
+    - path: data
+      hash: md5
+      md5: f0c7ec7603c27b51b76c012914fd4b39.dir
+      size: 53704810
+      nfiles: 4
+    - path: train.py
+      hash: md5
+      md5: 29300eaa2cb429ad4d286c8e9e2b6530
+      size: 929
+    outs:
+    - path: loss.csv
+      hash: md5
+      md5: 8ca2d20b59546a4e7ee7b0b9794baa0b
+      size: 621
+    - path: metrics.json
+      hash: md5
+      md5: f20ce405a3ea198f18652fb5847461bb
+      size: 83
