@@ -2,5 +2,4 @@ stages:
   mystage:
     cmd: python train.py
     deps:
-    - data
     - train.py
