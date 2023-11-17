@@ -1,5 +1,12 @@
 stages:
-  entrenar_modelo:
+  mystage:
     cmd: python train.py
     deps:
-      - train.py
+    - data
+    - train.py
+    metrics:
+    - metrics.json:
+        cache: false
+    plots:
+    - loss.csv:
+        cache: false

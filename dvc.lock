@@ -3,7 +3,38 @@ stages:
   entrenar_modelo:
     cmd: python train.py
     deps:
+    - path: data/train_features.csv
+      hash: md5
+      md5: 93d8b9cbac20db8a7e8bbc75f5ea8ed8
+      size: 38328672
+    - path: data/train_labels.csv
+      hash: md5
+      md5: 084d18ba49ccb2be39ada8592fbfafeb
+      size: 1950000
     - path: train.py
       hash: md5
       md5: 29300eaa2cb429ad4d286c8e9e2b6530
       size: 929
+  generar_datos:
+    cmd: python get_data.py
+  mystage:
+    cmd: python train.py
+    deps:
+    - path: data
+      hash: md5
+      md5: f0c7ec7603c27b51b76c012914fd4b39.dir
+      size: 53704810
+      nfiles: 4
+    - path: train.py
+      hash: md5
+      md5: 29300eaa2cb429ad4d286c8e9e2b6530
+      size: 929
+    outs:
+    - path: loss.csv
+      hash: md5
+      md5: 8ca2d20b59546a4e7ee7b0b9794baa0b
+      size: 621
+    - path: metrics.json
+      hash: md5
+      md5: f20ce405a3ea198f18652fb5847461bb
+      size: 83
