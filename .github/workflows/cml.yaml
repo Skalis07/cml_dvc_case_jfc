@@ -1,3 +1,4 @@
+#test
 name: train-my-model
 
 on: [push]
