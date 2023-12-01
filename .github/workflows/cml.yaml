@@ -39,11 +39,6 @@ jobs:
           # Add figure to report
           dvc plots diff --target loss.csv --show-vega master
           type vega.json
-          if [ -f vega.json ]; then
-            echo "vega.json exists."
-          else
-            echo "vega.json does not exist."
-          fi
           #dvc plots diff --target loss.csv --show-vega master > vega.json
           vl2png vega.json -s 1.3 > vega.png
           echo '![](./vega.png)' >> report.md
