@@ -25,39 +25,39 @@ jobs:
           # AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           # AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
-run: |
-  pip install -r requirements.txt
+        run: |
+          pip install -r requirements.txt
 
-  # Reproduce pipeline if any changes detected in dependencies
-  dvc repro
-
-  # Use DVC metrics diff to compare metrics to master
-  git fetch --prune --unshallow
-  dvc metrics diff master >> report.md
-
-  # Add figure to report
-  echo "Running DVC plots diff..."
-  dvc plots diff --target loss.csv --show-vega master
-
-  echo "Checking if vega.json exists..."
-  If (Test-Path vega.json) {
-      echo "vega.json found"
-      echo "Content of vega.json:"
-      Get-Content vega.json
-  } else {
-      echo "vega.json not found"
-  }
-
-  echo "Redirecting DVC plots output to vega.json..."
-  dvc plots diff --target loss.csv --show-vega master > vega.json
-
-  echo "Converting vega.json to PNG..."
-  vl2png vega.json -s 1.3 > vega.png
-  If (Test-Path vega.png) {
-      echo "Conversion successful"
-  } else {
-      echo "Failed to convert vega.json to PNG"
-  }
-
-  echo "Appending image to report..."
-  echo '![](./vega.png)' >> report.md
+          # Reproduce pipeline if any changes detected in dependencies
+          dvc repro
+        
+          # Use DVC metrics diff to compare metrics to master
+          git fetch --prune --unshallow
+          dvc metrics diff master >> report.md
+        
+          # Add figure to report
+          echo "Running DVC plots diff..."
+          dvc plots diff --target loss.csv --show-vega master
+        
+          echo "Checking if vega.json exists..."
+          If (Test-Path vega.json) {
+              echo "vega.json found"
+              echo "Content of vega.json:"
+              Get-Content vega.json
+          } else {
+              echo "vega.json not found"
+          }
+        
+          echo "Redirecting DVC plots output to vega.json..."
+          dvc plots diff --target loss.csv --show-vega master > vega.json
+        
+          echo "Converting vega.json to PNG..."
+          vl2png vega.json -s 1.3 > vega.png
+          If (Test-Path vega.png) {
+              echo "Conversion successful"
+          } else {
+              echo "Failed to convert vega.json to PNG"
+          }
+        
+          echo "Appending image to report..."
+          echo '![](./vega.png)' >> report.md
