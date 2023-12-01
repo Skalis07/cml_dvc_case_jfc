@@ -40,13 +40,22 @@ jobs:
           dvc plots diff --target loss.csv --show-vega master
 
           echo "Checking if vega.json exists..."
-          type vega.json || echo "vega.json not found"
+          If (Test-Path vega.json) {
+              echo "vega.json found"
+          } else {
+              echo "vega.json not found"
+          }
 
           echo "Redirecting DVC plots output to vega.json..."
           dvc plots diff --target loss.csv --show-vega master > vega.json
 
           echo "Converting vega.json to PNG..."
-          vl2png vega.json -s 1.3 > vega.png || echo "Failed to convert vega.json to PNG"
+          vl2png vega.json -s 1.3 > vega.png
+          If (Test-Path vega.png) {
+              echo "Conversion successful"
+          } else {
+              echo "Failed to convert vega.json to PNG"
+          }
 
           echo "Appending image to report..."
           echo '![](./vega.png)' >> report.md
